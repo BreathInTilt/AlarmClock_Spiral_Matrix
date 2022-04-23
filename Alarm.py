@@ -1,8 +1,10 @@
 import datetime
+from msilib.schema import ComboBox
 from time import sleep
 from tkinter import *
 from playsound import playsound
 from os import path
+from threading import Thread
 
 
 def timer_count(al_h, al_m, al_s):
@@ -19,7 +21,9 @@ def timer_count(al_h, al_m, al_s):
     timer = str(al_h-n_h) + ':' + str(al_m-n_m) + ':' + str(al_s-n_s)
     return timer
 
-
+def sound():
+    path2 = path.dirname(path.abspath(__file__))
+    playsound(path2 + "\\rota_podeoom.mp3")
 
 
 
@@ -30,11 +34,14 @@ def alarm():
     alarm_sec = int(input("Введите секунды = "))
     window = Tk()
     window.title("Alarm")
-    window.geometry("600x400")
+    window.geometry("600x400") #Design mb
     timeremaining = StringVar()
-    timelabel = Label(window, textvariable=timeremaining, anchor=CENTER, width=10, height=5, font=("Arial", 20))
+    timelabel = Label(window, textvariable=timeremaining, anchor=CENTER, width=10, height=5, font=("Arial", 20)) #Design
     timeremaining.set("Tap to update")
-    timelabel.grid(column=60, row=100)
+    timelabel.grid(column=60, row=10)   #Design
+    #textbox = Entry(window, width=10)
+    #textbox.grid(column=0, row=15)
+    
 
     def count_down():
      while True:
@@ -45,8 +52,7 @@ def alarm():
             if alarm_min == now.minute:
                 if alarm_sec == now.second:
                     timeremaining.set("Wake up!")
-                    path2 = path.dirname(path.abspath(__file__))
-                    playsound(path2 + "\\rota_podeoom.mp3")
+                    Thread(target = sound, daemon=True).start()
                     break
         timeremaining.set(timer_count(alarm_hour, alarm_min, alarm_sec))
         sleep(0.5)
@@ -54,7 +60,7 @@ def alarm():
 
             
     
-    Button(window, text="Tap", command=count_down, height=5, width=5).grid(column=150, row=200)  
+    Button(window, text="Tap", command=count_down, height=5, width=5).grid(column=150, row=200)  #Design
     window.mainloop()
     
 

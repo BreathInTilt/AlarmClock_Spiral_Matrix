@@ -1,10 +1,12 @@
 import datetime
-from msilib.schema import ComboBox
 from time import sleep
 from tkinter import *
 from playsound import playsound
 from os import path
 from threading import Thread
+
+
+
 
 
 def timer_count(al_h, al_m, al_s):
@@ -18,7 +20,13 @@ def timer_count(al_h, al_m, al_s):
     if al_m - n_m < 0:
         al_h -= 1
         al_m += 60
-    timer = str(al_h-n_h) + ':' + str(al_m-n_m) + ':' + str(al_s-n_s)
+    if al_h - n_h < 10:   b = "0" + str(al_h - n_h)
+    else:   a = str(al_h - n_h)
+    if al_m - n_m < 10:   a = "0" + str(al_m - n_m)
+    else:   b = str(al_m-n_m)
+    if al_s - n_s < 10:   c = "0" + str(al_s - n_s)
+    else:   c = str(al_s - n_s)
+    timer = a + ':' + b + ':' + c
     return timer
 
 def sound():
@@ -39,8 +47,6 @@ def alarm():
     timelabel = Label(window, textvariable=timeremaining, anchor=CENTER, width=10, height=5, font=("Arial", 20)) #Design
     timeremaining.set("Tap to update")
     timelabel.grid(column=60, row=10)   #Design
-    #textbox = Entry(window, width=10)
-    #textbox.grid(column=0, row=15)
     
 
     def count_down():
@@ -50,7 +56,7 @@ def alarm():
         
         if alarm_hour == now.hour:
             if alarm_min == now.minute:
-                if alarm_sec == now.second:
+                if alarm_sec <= now.second:
                     timeremaining.set("Wake up!")
                     Thread(target = sound, daemon=True).start()
                     break

@@ -7,6 +7,7 @@ from threading import Thread
 
 
 
+<<<<<<< HEAD
 
 
 def timer_count(al_h, al_m, al_s):

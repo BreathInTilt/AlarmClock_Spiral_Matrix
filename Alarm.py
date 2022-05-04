@@ -7,7 +7,7 @@ from threading import Thread
 
 
 
-<<<<<<< HEAD
+#<<<<<<< HEAD
 class Alarm:
 
     def __init__(self):
@@ -41,7 +41,7 @@ class Alarm:
         #self.warn = LabelFrame(self.window)
         #self.warn.pack(side=BOTTOM)
         self.window.mainloop()
-        
+
     def valuecheck(self):
         s = self.al_h + self.al_m + self.al_s    
         for i in s:
@@ -137,4 +137,4 @@ class Alarm:
 
 
 Alarm()
->>>>>>> testing
+#>>>>>>> testing

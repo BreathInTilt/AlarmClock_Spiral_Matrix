@@ -15,8 +15,8 @@ class Alarm:
         self.window.title("Input")  
         self.window.geometry('480x480')
         self.window["background"] = "blue"
-        self.lbl = Label(self.window, text="Будильник:")
-        self.lbl.pack(side=BOTTOM)
+        self.lbl = LabelFrame(self.window, text="Будильник:")
+        self.lbl.pack(side=TOP)
         self.lbl.grid(column=0, row=0)
         self.label_h = Label(self.window, text="Часы:", bg="blue", font=("OpenSansBold", 14), fg="white")
         self.label_h.place(x=5, y=20)
@@ -66,46 +66,61 @@ class Alarm:
         if self.valuecheck():
             if self.time_check():
                 self.cleanup()
-                self.alarm()
+                self.timelabel = Label(self.window, text="Tap to update", anchor=CENTER, width=10, height=5, font=("OpenSansBold", 20),fg="white" , bg="blue") #Design
+                self.timelabel.grid(column=100, row=60)   #Design
+                self.count_down()
             else:
                 self.lbl.configure(text="Введите корректное значение!")
         else:
             self.lbl.configure(text="Введите корректное значение!")
 
     def time_set(self):
+        
         now = datetime.datetime.now()
         n_s = now.second
         n_m = now.minute
         n_h = now.hour
-        if self.al_h == n_h:
-            if self.al_m == n_m:
-                if self.al_s <= n_s:
-                    self.timelabel.config(text="WAKE UP")
-                    Thread(target = self.sound, daemon=True).start()
-                    return 0
-        if self.al_s - n_s < -1:
-            self.al_m -= 1
-            self.al_s += 60
-        if self.al_m - n_m < 0:
-            self.al_h -= 1
-            self.al_m += 60
-        if self.al_h - n_h < 10:   a = "0" + str(self.al_h - n_h)
-        else:   a = str(self.al_h - n_h)
-        if self.al_m - n_m < 10:   b = "0" + str(self.al_m - n_m)
-        else:   b = str(self.al_m - n_m)
-        if self.al_s - n_s < 10:   c = "0" + str(self.al_s - n_s)
-        else:   c = str(self.al_s - n_s)
+        alarm_sec = self.al_s
+        alarm_min = self.al_m
+        alarm_hour = self.al_h
+        if alarm_sec - n_s < 0:
+            alarm_min -= 1
+            alarm_sec += 60
+        if alarm_min - n_m < 0:
+            alarm_hour -= 1
+            alarm_min += 60
+        if alarm_hour - n_h < 10:   a = "0" + str(alarm_hour - n_h)
+        else:   a = str(alarm_hour - n_h)
+        if alarm_min - n_m < 10:   b = "0" + str(alarm_min - n_m)
+        else:   b = str(alarm_min - n_m)
+        if alarm_sec - n_s < 10:   c = "0" + str(alarm_sec - n_s)
+        else:   c = str(alarm_sec - n_s)
         timer = a + ':' + b + ':' + c
-        self.timelabel.config(text=timer)
-        self.timelabel.after(500, self.time_set)
+        return timer
 
+
+    def count_down(self):
+        while True:
+            now = datetime.datetime.now()
+                
+            if self.al_h == now.hour:
+                if self.al_m == now.minute:
+                    if self.al_s <= now.second:
+                        #self.timeremaining.set("Wake up!")
+                        self.timelabel.config(text="Wake up!")
+                        Thread(target = self.sound, daemon=True).start()
+                        break
+            self.timelabel.config(text=self.time_set())
+            sleep(0.5)
+            self.window.update()
+                    
 
     def cleanup(self):
         self.label_h.destroy()
         self.label_m.destroy()
         self.label_s.destroy()
         self.btn.destroy()
-        #lbl.destroy()
+        self.lbl.destroy()
         self.txt_h.destroy()
         self.txt_m.destroy()
         self.txt_s.destroy()
@@ -115,7 +130,8 @@ class Alarm:
 
     def alarm(self):
         self.timelabel.place(x=10, y=10)
-        self.time_set()
+        self.count_down()
+        #self.time_set()
 
 
 Alarm()

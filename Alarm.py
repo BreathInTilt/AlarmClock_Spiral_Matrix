@@ -34,7 +34,7 @@ class Alarm:
         self.txt_s = Entry(self.window,width=10)
         self.txt_s.place(x=95, y=75)
         img = PhotoImage(file = self.path2 + "\\button_start.png")    
-        self.btn = Button(self.window, command=self.clicked, image=img, width=300, height=111)
+        self.btn = Button(self.window, command=self.clicked, image=img, width=300, height=111, bg="blue")
         self.btn.place(x = 180, y = 25)
         self.timelabel = Label(self.window, bg="blue", anchor=CENTER, width=10, height=5, font=("OpenSansBold", 14), fg="white")
         #btn.image = img

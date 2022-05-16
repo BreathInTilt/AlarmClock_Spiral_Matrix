@@ -14,7 +14,7 @@ class Alarm:
         self.window.title("Input")
         self.window.maxsize(width= 999, height = 562)
         self.window.minsize(width= 999, height = 562)
-        img2 = PhotoImage(file=self.path2+'\\Debilnik.png')
+        img2 = PhotoImage(file=self.path2+'\\background.png')
         self.bckgr = Label(self.window, image=img2).place(x = 0, y = 0)
         self.window["background"] = "blue"
         self.lbl = LabelFrame(self.window, text="Будильник:")
@@ -119,7 +119,6 @@ class Alarm:
                         # self.timeremaining.set("Wake up!")
                         self.timelabel.config(text="Wake up!")
                         Thread(target=self.sound, daemon=True).start()
-                        self.sound()
                         break
             self.timelabel.config(text=self.time_set())
             sleep(0.5)

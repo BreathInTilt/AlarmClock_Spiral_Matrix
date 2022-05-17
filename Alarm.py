@@ -20,17 +20,17 @@ class Alarm:
         self.lbl = LabelFrame(self.window, text="Будильник:")
         self.lbl.pack(side=TOP)
         self.lbl.grid(column=0, row=0)
-        self.label_h = Label(self.window, text="Часы:", bg="blue", font=("OpenSansBold", 14), fg="white")
+        self.label_h = Label(self.window, text="Часы:", bg="#171c33", font=("OpenSansBold", 14), fg="white")
         self.label_h.place(x=5, y=20)
         self.txt_h = Entry(self.window, width=10)
         self.txt_h.place(x=95, y=25)
-        self.label_m = Label(self.window, text="Минуты:", bg="blue", font=("OpenSansBold", 14), fg="white")
+        self.label_m = Label(self.window, text="Минуты:", bg="#171c33", font=("OpenSansBold", 14), fg="white")
         self.label_m.place(x=5, y=45)
         # txt_h.grid(column=10, row=10).pack
         self.txt_m = Entry(self.window, width=10)
         self.txt_m.place(x=95, y=50)
         # txt_m.grid(column=10, row=20)
-        self.label_s = Label(self.window, text="Секунды:", bg="blue", font=("OpenSansBold", 14), fg="white")
+        self.label_s = Label(self.window, text="Секунды:", bg="#171c33", font=("OpenSansBold", 14), fg="white")
         self.label_s.place(x=5, y=70)
         self.txt_s = Entry(self.window, width=10)
         self.txt_s.place(x=95, y=75)
@@ -38,8 +38,6 @@ class Alarm:
         # self.btn = Button(self.window, command=self.clicked, image=img, width=100, height=100)
         self.btn = Button(self.window, command=self.clicked, image=img, width=260, height=150)
         self.btn.place(x=180, y=25)
-        self.timelabel = Label(self.window, anchor=CENTER, width=10, height=5, font=("OpenSansBold", 14),
-                               fg="white")
         # btn.image = img
         # self.warn = LabelFrame(self.window)
         # self.warn.pack(side=BOTTOM)
@@ -70,9 +68,6 @@ class Alarm:
         if self.valuecheck():
             if self.time_check():
                 self.cleanup()
-                self.timelabel = Label(self.window, text="Tap to update", anchor=CENTER, width=10, height=5,
-                                       font=("OpenSansBold", 20), fg="white", bg="blue")  # Design
-                self.timelabel.grid(column=100, row=60)  # Design
                 self.count_down()
             else:
                 self.lbl.configure(text="Введите корректное значение!")

@@ -68,6 +68,9 @@ class Alarm:
         if self.valuecheck():
             if self.time_check():
                 self.cleanup()
+                self.timelabel = Label(self.window, text="Tap to update", anchor=CENTER, width=10, height=5,
+                                       font=("OpenSansBold", 20), fg="white", bg="blue")  # Design
+                self.timelabel.grid(column=100, row=60)  # Design
                 self.count_down()
             else:
                 self.lbl.configure(text="Введите корректное значение!")

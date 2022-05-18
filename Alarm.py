@@ -17,8 +17,8 @@ class Alarm:
         img2 = PhotoImage(file=self.path2+'\\background.png')
         self.bckgr = Label(self.window, image=img2)
         self.bckgr.place(x = 0, y = 0)
-        self.lbl = Label(self.window, text="Будильник:", bg="#171c33", font=("OpenSansBold", 14), fg="white")
-        self.lbl.grid(column=1, row=1)
+        self.lbl = Label(self.window, bg="#171c33", font=("OpenSansBold", 10), fg="white")
+        self.lbl.place(x = 1, y = 1)
         self.label_h = Label(self.window, text="Часы:", bg="#171c33", font=("OpenSansBold", 14), fg="white")
         self.label_h.place(x=5, y=25)
         self.txt_h = Entry(self.window, width=10)
@@ -45,8 +45,8 @@ class Alarm:
         for i in s:
             if 46 > ord(i) or ord(i) > 57:
                 return False
-            if self.al_h == "" or self.al_m == "" or self.al_s == "" or "." in s:
-                return False
+        if self.al_h == "" or self.al_m == "" or self.al_s == "" or "." in s:
+            return False
         return True
 
     def time_check(self):
@@ -67,7 +67,7 @@ class Alarm:
             if self.time_check():
                 self.cleanup()
                 self.timelabel = Label(
-                self.window, 
+                self.window,
                 width=10,
                 height=5,
                 font=("OpenSansBold", 16), 

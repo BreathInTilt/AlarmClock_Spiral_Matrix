@@ -25,8 +25,28 @@ def spiral(n, m):
 
 
 def main():
-    n = int(input("N = "))
-    m = int(input("M = "))
+    flag = False
+    while not flag:
+        try:
+            n = int(input("N = "))
+        except ValueError:
+            print("Oops, wrong type value of N! Try again...")
+            continue
+        if n <= 0:
+            print("N must be positive! Try again...")
+        else:
+            flag = True
+    flag = False
+    while not flag:
+        try:
+            m = int(input("M = "))
+        except ValueError:
+            print("Oops, wrong type value of M! Try again...")
+            continue
+        if m <= 0:
+            print("M must be positive! Try again...")
+        else:
+            flag = True
     print("="*32)
     print_m(spiral(n, m))
 

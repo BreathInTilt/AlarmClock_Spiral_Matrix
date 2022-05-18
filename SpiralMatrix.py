@@ -35,6 +35,7 @@ def main():
         if n <= 0:
             print("N must be positive! Try again...")
         else:
+            print("Success!")
             flag = True
     flag = False
     while not flag:
@@ -46,6 +47,7 @@ def main():
         if m <= 0:
             print("M must be positive! Try again...")
         else:
+            print("Success!")
             flag = True
     print("="*32)
     print_m(spiral(n, m))

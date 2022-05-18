@@ -17,7 +17,7 @@ class Alarm:
         img2 = PhotoImage(file=self.path2+'\\background.png')
         self.bckgr = Label(self.window, image=img2)
         self.bckgr.place(x = 0, y = 0)
-        self.lbl = LabelFrame(self.window, text="Будильник:")
+        self.lbl = Label(self.window, text="Будильник:")
         self.lbl.pack(side=TOP)
         self.lbl.grid(column=0, row=0)
         self.label_h = Label(self.window, text="Часы:", bg="#171c33", font=("OpenSansBold", 14), fg="white")
@@ -45,6 +45,8 @@ class Alarm:
         s = self.al_h + self.al_m + self.al_s
         for i in s:
             if 46 > ord(i) or ord(i) > 57:
+                return False
+            if self.al_h == "" or self.al_m == "" or self.al_s == "" or "." in s:
                 return False
         return True
 

@@ -4,6 +4,7 @@ from tkinter import *
 from playsound import playsound
 from os import path
 from threading import Thread
+from PIL import ImageTk, Image
 
 
 # <<<<<<< HEAD
@@ -11,12 +12,13 @@ class Alarm:
     def __init__(self):
         self.path2 = path.dirname(path.abspath(__file__))
         self.window = Tk()
-        self.window.title("Input")
+        self.window.title("Будильник")
         self.window.maxsize(width= 999, height = 562)
         self.window.minsize(width= 999, height = 562)
         img2 = PhotoImage(file=self.path2+'\\background.png')
-        self.bckgr = Label(self.window, image=img2).place(x = 0, y = 0)
-        self.window["background"] = "blue"
+        self.bckgr = Label(self.window, image=img2)
+        self.bckgr.place(x = 0, y = 0)
+        #self.window["background"] = "blue"
         self.lbl = LabelFrame(self.window, text="Будильник:")
         self.lbl.pack(side=TOP)
         self.lbl.grid(column=0, row=0)
@@ -35,13 +37,19 @@ class Alarm:
         self.txt_s = Entry(self.window, width=10)
         self.txt_s.place(x=95, y=75)
         img = PhotoImage(file=self.path2 + "\\under_the_grib.png")
-        # self.btn = Button(self.window, command=self.clicked, image=img, width=100, height=100)
+        #img3 = Image.open(self.path2 + "\\morning.png")
+        #im4 = img3.resize((180, 150))
+        self.bp = Image.open(self.path2 + "\\wakeup.png")
+        self.bp = self.bp.resize((999, 562))
+        self.wakeup = ImageTk.PhotoImage(self.bp)
+        
+        #self.wakeup = ImageTk.PhotoImage(im4)
+        #self.wakeup = PhotoImage(file = self.path2 + "\\morning.png")
+        #self.timelabeldown = Label(self.window, image=self.wakeup, width=160, height=120)
+        
         self.btn = Button(self.window, command=self.clicked, image=img, width=260, height=150)
         self.btn.place(x=180, y=25)
-        # btn.image = img
-        # self.warn = LabelFrame(self.window)
-        # self.warn.pack(side=BOTTOM)
-
+        
         self.window.mainloop()
 
     def valuecheck(self):
@@ -68,9 +76,15 @@ class Alarm:
         if self.valuecheck():
             if self.time_check():
                 self.cleanup()
-                self.timelabel = Label(self.window, text="Tap to update", anchor=CENTER, width=10, height=5,
-                                       font=("OpenSansBold", 20), fg="white", bg="blue")  # Design
-                self.timelabel.grid(column=100, row=60)  # Design
+                self.timelabel = Label(
+                self.window, 
+                text="Tap to update", 
+                width=10,
+                height=5,
+                font=("OpenSansBold", 16), 
+                fg="#F2B6CA",
+                bg="#686b9f")  # Design
+                self.timelabel.place(x=620, y=140)  # Design
                 self.count_down()
             else:
                 self.lbl.configure(text="Введите корректное значение!")
@@ -115,7 +129,15 @@ class Alarm:
                 if self.al_m == now.minute:
                     if self.al_s <= now.second:
                         # self.timeremaining.set("Wake up!")
-                        self.timelabel.config(text="Wake up!")
+                        #wakeup = Image.open(self.path2 + "\\wakeuppp.png")
+                        #myimg = ImageTk.PhotoImage(wakeup)
+                        #canv = Canvas(self.window, width=100, height=100)
+                        #canv.pack()
+                        #wakeup = PhotoImage(file = self.path2 + "\\gobtn.png")
+                        self.timelabel.destroy()
+                        self.bckgr.config(image=self.wakeup)
+                        #self.timelabeldown.place(x=600, y=140)
+
                         Thread(target=self.sound, daemon=True).start()
                         break
             self.timelabel.config(text=self.time_set())
@@ -133,7 +155,7 @@ class Alarm:
         self.txt_s.destroy()
 
     def sound(self):
-        playsound(self.path2 + "\\rota_podeoom.mp3")
+        playsound(self.path2 + "\\narutoop.wav")
 
     def alarm(self):
         self.timelabel.place(x=10, y=10)
